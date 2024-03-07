@@ -14,6 +14,9 @@ function App() {
     }
   }, [otplength, otp]);
 
+  useEffect(() => {
+    inputRefs.current[0]?.focus();
+  });
   // Function to handle input change
   const handleChange = (index, value) => {
     // Ensure that the value is a number and is between 0 and 9
