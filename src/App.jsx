@@ -8,9 +8,9 @@ function App() {
 
   // Effect to alert when OTP is complete
   useEffect(() => {
-    if (otplength === 5) {
+    if (otplength === 4 && otp[4] != "") {
       console.log(otp);
-      alert(otp.join(""));
+      // alert(otp.join(""));
     }
   }, [otplength, otp]);
 
@@ -31,6 +31,7 @@ function App() {
         inputRefs.current[index]?.setAttribute("disabled", true);
         inputRefs.current[index + 1]?.removeAttribute("disabled");
         inputRefs.current[index + 1]?.focus();
+        setOtplength((prev) => prev + 1);
       }
 
       // Focus previous input field and disable current input field if value is cleared
@@ -38,26 +39,27 @@ function App() {
         inputRefs.current[index - 1]?.removeAttribute("disabled");
         inputRefs.current[index - 1]?.focus();
         inputRefs.current[index]?.setAttribute("disabled", true);
+        setOtplength((prev) => prev - 1);
       }
 
       // Update OTP and OTP length states
       setOtp(newOtp);
-      setOtplength((prev) => prev + 1);
     }
   };
-
+  console.log(otplength);
   // Function to handle key down events
   const handleKeyDown = (index, e) => {
     // Focus previous input field if left arrow key is pressed and current input field is empty
     if (e.key === "ArrowLeft" && index > 0 && otp[index] == "") {
       inputRefs.current[index - 1]?.removeAttribute("disabled");
       inputRefs.current[index - 1]?.focus();
+      setOtplength((prev) => prev - 1);
     }
-
     // Focus next input field if right arrow key is pressed and current input field is not empty
     if (e.key === "ArrowRight" && index < otp.length - 1 && otp[index] !== "") {
       inputRefs.current[index + 1]?.removeAttribute("disabled");
       inputRefs.current[index + 1]?.focus();
+      setOtplength((prev) => prev + 1);
     }
   };
 
