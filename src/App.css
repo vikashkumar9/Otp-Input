@@ -16,6 +16,7 @@
   font-size: large;
   text-align: center;
 }
-.clearotp_btn {
-  margin: 20px;
+.otp_inputs:focus {
+  color: blue;
+  outline-color: blue;
 }
