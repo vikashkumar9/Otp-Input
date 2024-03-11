@@ -65,6 +65,13 @@ function App() {
       setOtplength((prev) => prev + 1);
     }
   };
+  const handleFocus = (index) => {
+    inputRefs.current.map((ref, i) => {
+      ref.classList.remove("active");
+    });
+
+    inputRefs.current[index].classList.add("active");
+  };
 
   return (
     <>
@@ -78,6 +85,7 @@ function App() {
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               className="otp_inputs"
+              onFocus={() => handleFocus(i)}
               ref={(el) => (inputRefs.current[i] = el)}
               disabled={otplength >= i ? false : true}
             />

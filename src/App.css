@@ -16,7 +16,8 @@
   font-size: large;
   text-align: center;
 }
-.otp_inputs:focus {
+
+.active {
   color: blue;
   outline-color: blue;
 }
