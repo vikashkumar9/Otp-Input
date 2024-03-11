@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 
 function App() {
-  const [otp, setOtp] = useState(new Array(5).fill("")); // OTP array
+  const noofFields = 5; // number of input fields in the component
+  const [otp, setOtp] = useState(new Array(noofFields).fill("")); // OTP array
   const [otplength, setOtplength] = useState(0); // Length of entered OTP
   const inputRefs = useRef([]); // References to OTP input fields
 
@@ -10,7 +11,6 @@ function App() {
   useEffect(() => {
     if (otplength === 4 && otp[4] != "") {
       console.log(otp);
-      // alert(otp.join(""));
     }
   }, [otplength, otp]);
 
@@ -73,8 +73,7 @@ function App() {
         {otp.map((value, i) => (
           <div key={i}>
             <input
-              type="number"
-              maxLength={1}
+              type="text"
               value={value}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
