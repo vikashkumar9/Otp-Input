@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-
+import { OtpContext } from "./components/OtpContext";
+import { useContext } from "react";
 function App() {
-  const noofFields = 5; // number of input fields in the component
-  const [otp, setOtp] = useState(new Array(noofFields).fill("")); // OTP array
-  const [otplength, setOtplength] = useState(0); // Length of entered OTP
-  const inputRefs = useRef([]); // References to OTP input fields
+  const { otp, setOtp, otplength, setOtplength, inputRefs } =
+    useContext(OtpContext);
 
   // Effect to alert when OTP is complete
   useEffect(() => {
