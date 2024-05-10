@@ -20,10 +20,11 @@ function App() {
   // Function to handle input change
   const handleChange = (index, value) => {
     //new
-    if (otp[index] !== '') {
-      inputRefs.current[index + 1]?.removeAttribute('disabled');
-      inputRefs.current[index + 1]?.focus();
-    }
+    // if (otp[index] !== '') {
+    //   inputRefs.current[index + 1]?.removeAttribute('disabled');
+    //   inputRefs.current[index + 1]?.focus();
+    //   setOtplength((prev) => prev + 1);
+    // }
     // Ensure that the value is a number and is between 0 and 9
     if (!isNaN(value) && value >= 0 && value <= 9) {
       const newOtp = [...otp];
@@ -69,7 +70,13 @@ function App() {
       setOtplength((prev) => prev - 1);
     }
     // Focus next input field if right arrow key is pressed and current input field is not empty
-    if (e.key === 'ArrowRight' && index < otp.length - 1 && otp[index] !== '') {
+    if (
+      e.key === 'ArrowRight' ||
+      (index < otp.length - 1 &&
+        otp[index] !== '' &&
+        e.key !== 'Delete' &&
+        e.key !== 'Backspace')
+    ) {
       inputRefs.current[index + 1]?.removeAttribute('disabled');
       inputRefs.current[index + 1]?.focus();
       setOtplength((prev) => prev + 1);
