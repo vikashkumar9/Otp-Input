@@ -42,6 +42,7 @@ function App() {
         inputRefs.current[index - 1]?.removeAttribute('disabled');
         inputRefs.current[index - 1]?.focus();
         inputRefs.current[index]?.setAttribute('disabled', true);
+
         setOtplength((prev) => prev - 1);
       }
 
@@ -54,7 +55,7 @@ function App() {
   const handleKeyDown = (index, e) => {
     // Focus previous input field if left arrow key is pressed and current input field is empty
     if (
-      (e.key === 'ArrowLeft' || e.key === 'Delete') &&
+      (e.key === 'ArrowLeft' || e.key === 'Delete' || e.key === 'Backspace') &&
       index > 0 &&
       otp[index] == ''
     ) {
