@@ -59,17 +59,18 @@ function App() {
   console.log(otplength);
   // Function to handle key down events
   const handleKeyDown = (index, e) => {
-    // new Focus previous input field if left arrow key is pressed and current input field is empty
+    // Focus previous input field if left arrow key is pressed and current input field is empty
     if (
       (e.key === 'ArrowLeft' || e.key === 'Delete' || e.key === 'Backspace') &&
       index > 0 &&
-      otp[index] == ''
+      otp[index] === ''
     ) {
       inputRefs.current[index - 1]?.removeAttribute('disabled');
       inputRefs.current[index - 1]?.focus();
       setOtplength((prev) => prev - 1);
     }
-    // Focus next input field if right arrow key is pressed and current input field is not empty
+
+    // Focus next input field if right arrow key is pressed or if the current input field is not empty
     if (
       e.key === 'ArrowRight' ||
       (index < otp.length - 1 &&
@@ -80,6 +81,13 @@ function App() {
       inputRefs.current[index + 1]?.removeAttribute('disabled');
       inputRefs.current[index + 1]?.focus();
       setOtplength((prev) => prev + 1);
+    }
+
+    // Handle backspace key press on mobile by removing the current value
+    if (e.key === 'Backspace' && otp[index] !== '') {
+      const newOtp = [...otp];
+      newOtp[index] = '';
+      setOtp(newOtp);
     }
   };
 
