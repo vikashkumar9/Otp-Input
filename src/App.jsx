@@ -19,6 +19,11 @@ function App() {
 
   // Function to handle input change
   const handleChange = (index, value) => {
+    //new
+    if (otp[index] !== '') {
+      inputRefs.current[index + 1]?.removeAttribute('disabled');
+      inputRefs.current[index + 1]?.focus();
+    }
     // Ensure that the value is a number and is between 0 and 9
     if (!isNaN(value) && value >= 0 && value <= 9) {
       const newOtp = [...otp];
@@ -53,7 +58,7 @@ function App() {
   console.log(otplength);
   // Function to handle key down events
   const handleKeyDown = (index, e) => {
-    // Focus previous input field if left arrow key is pressed and current input field is empty
+    // new Focus previous input field if left arrow key is pressed and current input field is empty
     if (
       (e.key === 'ArrowLeft' || e.key === 'Delete' || e.key === 'Backspace') &&
       index > 0 &&
@@ -70,6 +75,7 @@ function App() {
       setOtplength((prev) => prev + 1);
     }
   };
+
   const handleFocus = (index) => {
     inputRefs.current.map((ref, i) => {
       ref.classList.remove('active');
