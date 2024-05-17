@@ -70,8 +70,8 @@ function App() {
         newOtp[index] = '';
 
         setOtp(newOtp);
-        inputRefsArray[index + 1]?.removeAttribute('disabled');
-        inputRefsArray[index + 1]?.focus();
+        inputRefsArray[index - 1]?.removeAttribute('disabled');
+        inputRefsArray[index - 1]?.focus();
         return; // Early return to prevent cursor movement issues
       }
     }
