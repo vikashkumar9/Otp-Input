@@ -61,18 +61,13 @@ function App() {
         // Focus previous input field if left arrow key, backspace, or delete is pressed and current input field is empty
         inputRefsArray[index - 1]?.removeAttribute('disabled');
         inputRefsArray[index - 1]?.focus();
-
         setOtplength((prev) => prev - 1);
         return; // Early return to prevent executing the next condition in the same keydown event
       } else if (otp[index] !== '') {
         // Handle backspace or delete key press when the current input field is not empty
-
-        inputRefsArray[index]?.focus();
         const newOtp = [...otp];
         newOtp[index] = '';
-
         setOtp(newOtp);
-
         return; // Early return to prevent cursor movement issues
       }
     }
