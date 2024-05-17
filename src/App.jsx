@@ -37,13 +37,13 @@ function App() {
       }
 
       // Focus previous input field and disable current input field if value is cleared
-      // if (value === '' && index > 0) {
-      //   inputRefs.current[index - 1]?.removeAttribute('disabled');
-      //   inputRefs.current[index - 1]?.focus();
-      //   inputRefs.current[index]?.setAttribute('disabled', true);
+      if (value === '' && index > 0) {
+        inputRefs.current[index - 1]?.removeAttribute('disabled');
+        // inputRefs.current[index - 1]?.focus();
+        inputRefs.current[index]?.setAttribute('disabled', true);
 
-      //   setOtplength((prev) => prev - 1);
-      // }
+        setOtplength((prev) => prev - 1);
+      }
 
       // Update OTP and OTP length states
       setOtp(newOtp);
