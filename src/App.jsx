@@ -63,7 +63,7 @@ function App() {
 
     // Focus previous input field if left arrow key, backspace, or delete is pressed and current input field is empty
     if (
-      (e.key === 'ArrowLeft' || e.key === 'Delete') &&
+      (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'Delete') &&
       index > 0 &&
       otp[index] === ''
     ) {
