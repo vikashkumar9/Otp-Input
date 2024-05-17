@@ -19,13 +19,6 @@ function App() {
 
   // Function to handle input change
   const handleChange = (index, value) => {
-    //new
-    // if (otp[index] !== '') {
-    //   inputRefs.current[index + 1]?.removeAttribute('disabled');
-    //   inputRefs.current[index + 1]?.focus();
-    //   setOtplength((prev) => prev + 1);
-    // }
-    // Ensure that the value is a number and is between 0 and 9
     if (!isNaN(value) && value >= 0 && value <= 9) {
       const newOtp = [...otp];
       newOtp[index] = value;
@@ -44,13 +37,13 @@ function App() {
       }
 
       // Focus previous input field and disable current input field if value is cleared
-      if (value === '' && index > 0) {
-        inputRefs.current[index - 1]?.removeAttribute('disabled');
-        inputRefs.current[index - 1]?.focus();
-        inputRefs.current[index]?.setAttribute('disabled', true);
+      // if (value === '' && index > 0) {
+      //   inputRefs.current[index - 1]?.removeAttribute('disabled');
+      //   inputRefs.current[index - 1]?.focus();
+      //   inputRefs.current[index]?.setAttribute('disabled', true);
 
-        setOtplength((prev) => prev - 1);
-      }
+      //   setOtplength((prev) => prev - 1);
+      // }
 
       // Update OTP and OTP length states
       setOtp(newOtp);
@@ -84,7 +77,7 @@ function App() {
         // Handle backspace or delete key press when the current input field is not empty
         const newOtp = [...otp];
         newOtp[index] = '';
-        inputRefs.current[index - 1]?.setAttribute('disabled', true);
+
         setOtp(newOtp);
         return; // Early return to prevent cursor movement issues
       }
