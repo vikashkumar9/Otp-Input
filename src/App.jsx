@@ -55,16 +55,6 @@ function App() {
     const inputRefsArray = inputRefs.current;
 
     // Focus previous input field if left arrow key, backspace, or delete is pressed and current input field is empty
-    if (
-      (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'Delete') &&
-      index > 0 &&
-      otp[index] === ''
-    ) {
-      inputRefsArray[index - 1]?.removeAttribute('disabled');
-      inputRefsArray[index - 1]?.focus();
-      setOtplength((prev) => prev - 1);
-      return; // Early return to prevent executing the next condition in the same keydown event
-    }
 
     if (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'Delete') {
       if (index > 0 && otp[index] === '') {
