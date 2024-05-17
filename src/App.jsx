@@ -74,7 +74,7 @@ function App() {
     }
 
     // Focus next input field if right arrow key is pressed
-    if (e.key === 'ArrowRight' && index < otp.length - 1) {
+    if (e.key === 'ArrowRight' && index < otp.length - 1 && otp[index] !== '') {
       inputRefsArray[index + 1]?.removeAttribute('disabled');
       inputRefsArray[index + 1]?.focus();
       return; // Early return to prevent executing the next condition in the same keydown event
