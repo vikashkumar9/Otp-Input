@@ -64,12 +64,28 @@ function App() {
       } else if (otp[index] !== '') {
         const newOtp = [...otp];
         newOtp[index] = '';
-        // inputRefsArray[index]?.focus();
+        inputRefsArray[index + 1]?.focus();
         // Ensure focus remains on the current input field
         setOtp(newOtp);
 
         return; // Early return to prevent cursor movement issues
       }
+    }
+    if (
+      e.key >= '0' &&
+      e.key <= '9' &&
+      otp[index] !== '' &&
+      index < otp.length - 1
+    ) {
+      const newOtp = [...otp];
+      newOtp[index + 1] = e.key;
+      inputRefs.current[index]?.setAttribute('disabled', true);
+      inputRefs.current[index + 1]?.removeAttribute('disabled');
+      inputRefs.current[index + 1]?.focus();
+      setOtplength((prev) => prev + 1);
+      setOtp(newOtp);
+
+      return; // Early return to prevent cursor movement issues
     }
 
     // Focus next input field if right arrow key is pressed
