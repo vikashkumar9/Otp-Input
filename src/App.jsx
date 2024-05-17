@@ -73,7 +73,10 @@ function App() {
     // Focus next  input field if right arrow key is pressed or if the current input field is not empty
     if (
       e.key === 'ArrowRight' ||
-      (index < otp.length - 1 && otp[index] !== '' && e.key != 'Backspace')
+      (index < otp.length - 1 &&
+        otp[index] !== '' &&
+        e.key != 'Delete' &&
+        e.key != 'Backspace')
     ) {
       inputRefs.current[index + 1]?.removeAttribute('disabled');
       inputRefs.current[index + 1]?.focus();
