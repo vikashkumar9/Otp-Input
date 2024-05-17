@@ -1,114 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import './App.css';
 import { OtpContext } from './components/OtpContext';
-import { useContext } from 'react';
+
 function App() {
   const { otp, setOtp, otplength, setOtplength, inputRefs } =
     useContext(OtpContext);
 
   // Effect to alert when OTP is complete
   useEffect(() => {
-    if (otplength === 4 && otp[4] != '') {
-      console.log(otp);
+    if (otplength === otp.length && otp.every((value) => value !== '')) {
+      console.log(otp.join(''));
     }
   }, [otplength, otp]);
 
+  // Set focus on the first input field on mount
   useEffect(() => {
     inputRefs.current[0]?.focus();
-  });
+  }, []);
 
   // Function to handle input change
   const handleChange = (index, value) => {
-    //new
-    // if (otp[index] !== '') {
-    //   inputRefs.current[index + 1]?.removeAttribute('disabled');
-    //   inputRefs.current[index + 1]?.focus();
-    //   setOtplength((prev) => prev + 1);
-    // }
-    // Ensure that the value is a number and is between 0 and 9
     if (!isNaN(value) && value >= 0 && value <= 9) {
       const newOtp = [...otp];
       newOtp[index] = value;
+      setOtp(newOtp);
 
-      inputRefs.current.map((ref, i) => {
-        ref.setAttribute('disabled', true);
-      });
-      inputRefs.current[index]?.removeAttribute('disabled');
-
-      // Enable next input field if value is entered and not at the last index
       if (value && index < otp.length - 1) {
-        inputRefs.current[index]?.setAttribute('disabled', true);
-        inputRefs.current[index + 1]?.removeAttribute('disabled');
         inputRefs.current[index + 1]?.focus();
         setOtplength((prev) => prev + 1);
       }
 
-      // Focus previous input field and disable current input field if value is cleared
       if (value === '' && index > 0) {
-        inputRefs.current[index - 1]?.removeAttribute('disabled');
         inputRefs.current[index - 1]?.focus();
-        inputRefs.current[index]?.setAttribute('disabled', true);
-
         setOtplength((prev) => prev - 1);
       }
-
-      // Update OTP and OTP length states
-      setOtp(newOtp);
     }
   };
-  console.log(otplength);
+
   // Function to handle key down events
   const handleKeyDown = (index, e) => {
-    const inputRefsArray = inputRefs.current;
-
-    // Focus previous input field if left arrow key, backspace, or delete is pressed and current input field is empty
-    if (
-      (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'Delete') &&
-      index > 0 &&
-      otp[index] === ''
+    if (e.key === 'ArrowLeft' && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    } else if (e.key === 'ArrowRight' && index < otp.length - 1) {
+      inputRefs.current[index + 1]?.focus();
+    } else if (
+      (e.key === 'Backspace' || e.key === 'Delete') &&
+      otp[index] === '' &&
+      index > 0
     ) {
-      inputRefsArray[index - 1]?.removeAttribute('disabled');
-      inputRefsArray[index - 1]?.focus();
+      inputRefs.current[index - 1]?.focus();
       setOtplength((prev) => prev - 1);
-      return; // Early return to prevent executing the next condition in the same keydown event
-    }
-
-    // Focus next input field if right arrow key is pressed
-    if (e.key === 'ArrowRight') {
-      if (index < otp.length - 1) {
-        inputRefsArray[index + 1]?.removeAttribute('disabled');
-        inputRefsArray[index + 1]?.focus();
-        setOtplength((prev) => prev + 1);
-      }
-      return;
-    }
-
-    // Handle case when backspace or delete is pressed and current input field is not empty
-    if ((e.key === 'Backspace' || e.key === 'Delete') && otp[index] !== '') {
-      otp[index] = '';
-      setOtp([...otp]);
-      return;
-    }
-
-    // Focus next input field if current input field is not empty (excluding delete and backspace keys)
-    if (
-      index < otp.length - 1 &&
-      otp[index] !== '' &&
-      e.key !== 'Delete' &&
-      e.key !== 'Backspace'
-    ) {
-      inputRefsArray[index + 1]?.removeAttribute('disabled');
-      inputRefsArray[index + 1]?.focus();
-      setOtplength((prev) => prev + 1);
     }
   };
 
   const handleFocus = (index) => {
-    inputRefs.current.map((ref, i) => {
-      ref.classList.remove('active');
-    });
-
-    inputRefs.current[index].classList.add('active');
+    inputRefs.current.forEach((ref) => ref.classList.remove('active'));
+    inputRefs.current[index]?.classList.add('active');
   };
 
   return (
@@ -125,7 +72,8 @@ function App() {
               className='otp_inputs'
               onFocus={() => handleFocus(i)}
               ref={(el) => (inputRefs.current[i] = el)}
-              disabled={otplength >= i ? false : true}
+              maxLength={1}
+              disabled={otplength < i}
             />
           </div>
         ))}
