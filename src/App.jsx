@@ -110,6 +110,8 @@ function App() {
               onKeyDown={(e) => handleKeyDown(i, e)}
               className='otp_inputs'
               onFocus={() => handleFocus(i)}
+              inputMode='numeric'
+              pattern='[0-9]*'
               ref={(el) => (inputRefs.current[i] = el)}
               disabled={otplength >= i ? false : true}
             />
