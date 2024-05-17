@@ -61,7 +61,7 @@ function App() {
   const handleKeyDown = (index, e) => {
     // Focus previous input field if left arrow key is pressed and current input field is empty
     if (
-      (e.key === 'ArrowLeft' || e.key === 'Delete' || e.key === 'Backspace') &&
+      (e.key === 'ArrowLeft' || e.key === 'Backspace') &&
       index > 0 &&
       otp[index] === ''
     ) {
@@ -70,13 +70,10 @@ function App() {
       setOtplength((prev) => prev - 1);
     }
 
-    // Focus next input field if right arrow key is pressed or if the current input field is not empty
+    // Focus next  input field if right arrow key is pressed or if the current input field is not empty
     if (
       e.key === 'ArrowRight' ||
-      (index < otp.length - 1 &&
-        otp[index] !== '' &&
-        e.key !== 'Delete' &&
-        e.key !== 'Backspace')
+      (index < otp.length - 1 && otp[index] !== '' && e.key != 'Backspace')
     ) {
       inputRefs.current[index + 1]?.removeAttribute('disabled');
       inputRefs.current[index + 1]?.focus();
@@ -84,11 +81,11 @@ function App() {
     }
 
     // Handle backspace key press on mobile by removing the current value
-    if (e.key === 'Backspace' && otp[index] !== '') {
-      const newOtp = [...otp];
-      newOtp[index] = '';
-      setOtp(newOtp);
-    }
+    // if (e.key === 'Backspace' && otp[index] !== '') {
+    //   const newOtp = [...otp];
+    //   newOtp[index] = '';
+    //   setOtp(newOtp);
+    // }
   };
 
   const handleFocus = (index) => {
