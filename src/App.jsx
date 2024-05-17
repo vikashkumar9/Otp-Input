@@ -68,9 +68,10 @@ function App() {
         // Handle backspace or delete key press when the current input field is not empty
         const newOtp = [...otp];
         newOtp[index] = '';
+
+        setOtp(newOtp);
         inputRefsArray[index]?.removeAttribute('disabled');
         inputRefsArray[index]?.focus();
-        setOtp(newOtp);
         return; // Early return to prevent cursor movement issues
       }
     }
