@@ -38,8 +38,8 @@ function App() {
 
       // Focus previous input field and disable current input field if value is cleared
       if (value === '' && index > 0) {
-        inputRefs.current[index - 1]?.removeAttribute('disabled');
-        // inputRefs.current[index - 1]?.focus();
+        inputRefs.current[index]?.removeAttribute('disabled');
+        inputRefs.current[index]?.focus();
         inputRefs.current[index]?.setAttribute('disabled', true);
 
         setOtplength((prev) => prev - 1);
