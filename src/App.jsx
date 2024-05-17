@@ -59,36 +59,44 @@ function App() {
   console.log(otplength);
   // Function to handle key down events
   const handleKeyDown = (index, e) => {
-    // Focus previous input field if left arrow key is pressed and current input field is empty
+    const inputRefsArray = inputRefs.current;
+
+    // Focus previous input field if left arrow key or backspace is pressed and current input field is empty
     if (
       (e.key === 'ArrowLeft' || e.key === 'Backspace') &&
       index > 0 &&
       otp[index] === ''
     ) {
-      inputRefs.current[index - 1]?.removeAttribute('disabled');
-      inputRefs.current[index - 1]?.focus();
+      inputRefsArray[index - 1]?.removeAttribute('disabled');
+      inputRefsArray[index - 1]?.focus();
       setOtplength((prev) => prev - 1);
+      return; // Early return to prevent executing the next condition in the same keydown event
     }
 
-    // Focus next  input field if right arrow key is pressed or if the current input field is not empty
+    // Focus next input field if right arrow key is pressed or if the current input field is not empty (excluding delete and backspace keys)
     if (
       e.key === 'ArrowRight' ||
       (index < otp.length - 1 &&
         otp[index] !== '' &&
-        e.key != 'Delete' &&
-        e.key != 'Backspace')
+        e.key !== 'Delete' &&
+        e.key !== 'Backspace')
     ) {
-      inputRefs.current[index + 1]?.removeAttribute('disabled');
-      inputRefs.current[index + 1]?.focus();
+      inputRefsArray[index + 1]?.removeAttribute('disabled');
+      inputRefsArray[index + 1]?.focus();
       setOtplength((prev) => prev + 1);
     }
 
-    // Handle backspace key press on mobile by removing the current value
-    // if (e.key === 'Backspace' && otp[index] !== '') {
-    //   const newOtp = [...otp];
-    //   newOtp[index] = '';
-    //   setOtp(newOtp);
-    // }
+    // Additional condition for mobile behavior: move to previous field on cross button press
+    if (
+      e.key === 'Backspace' &&
+      index > 0 &&
+      otp[index] === '' &&
+      otp[index - 1] !== ''
+    ) {
+      inputRefsArray[index - 1]?.removeAttribute('disabled');
+      inputRefsArray[index - 1]?.focus();
+      setOtplength((prev) => prev - 1);
+    }
   };
 
   const handleFocus = (index) => {
