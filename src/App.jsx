@@ -65,6 +65,7 @@ function App() {
         const newOtp = [...otp];
         newOtp[index] = '';
         setOtp(newOtp);
+        inputRefsArray[index]?.focus(); // Ensure focus remains on the current input field
         return; // Early return to prevent cursor movement issues
       }
     }
@@ -77,6 +78,7 @@ function App() {
       return; // Early return to prevent executing the next condition in the same keydown event
     }
   };
+
   const handleFocus = (index) => {
     inputRefs.current.map((ref, i) => {
       ref.classList.remove('active');
