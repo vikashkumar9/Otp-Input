@@ -61,9 +61,9 @@ function App() {
   const handleKeyDown = (index, e) => {
     const inputRefsArray = inputRefs.current;
 
-    // Focus previous input field if left arrow key or backspace is pressed and current input field is empty
+    // Focus previous input field if left arrow key, backspace, or delete is pressed and current input field is empty
     if (
-      (e.key === 'ArrowLeft' || e.key === 'Backspace') &&
+      (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'Delete') &&
       index > 0 &&
       otp[index] === ''
     ) {
@@ -73,29 +73,33 @@ function App() {
       return; // Early return to prevent executing the next condition in the same keydown event
     }
 
-    // Focus next input field if right arrow key is pressed or if the current input field is not empty (excluding delete and backspace keys)
+    // Focus next input field if right arrow key is pressed
+    if (e.key === 'ArrowRight') {
+      if (index < otp.length - 1) {
+        inputRefsArray[index + 1]?.removeAttribute('disabled');
+        inputRefsArray[index + 1]?.focus();
+        setOtplength((prev) => prev + 1);
+      }
+      return;
+    }
+
+    // Handle case when backspace or delete is pressed and current input field is not empty
+    if ((e.key === 'Backspace' || e.key === 'Delete') && otp[index] !== '') {
+      otp[index] = '';
+      setOtp([...otp]);
+      return;
+    }
+
+    // Focus next input field if current input field is not empty (excluding delete and backspace keys)
     if (
-      e.key === 'ArrowRight' ||
-      (index < otp.length - 1 &&
-        otp[index] !== '' &&
-        e.key !== 'Delete' &&
-        e.key !== 'Backspace')
+      index < otp.length - 1 &&
+      otp[index] !== '' &&
+      e.key !== 'Delete' &&
+      e.key !== 'Backspace'
     ) {
       inputRefsArray[index + 1]?.removeAttribute('disabled');
       inputRefsArray[index + 1]?.focus();
       setOtplength((prev) => prev + 1);
-    }
-
-    // Additional condition for mobile behavior: move to previous field on cross button press
-    if (
-      e.key === 'Backspace' &&
-      index > 0 &&
-      otp[index] === '' &&
-      otp[index - 1] !== ''
-    ) {
-      inputRefsArray[index - 1]?.removeAttribute('disabled');
-      inputRefsArray[index - 1]?.focus();
-      setOtplength((prev) => prev - 1);
     }
   };
 
