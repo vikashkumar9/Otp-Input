@@ -66,12 +66,13 @@ function App() {
         return; // Early return to prevent executing the next condition in the same keydown event
       } else if (otp[index] !== '') {
         // Handle backspace or delete key press when the current input field is not empty
+        inputRefsArray[index]?.removeAttribute('disabled');
+        inputRefsArray[index]?.focus();
         const newOtp = [...otp];
         newOtp[index] = '';
 
         setOtp(newOtp);
-        inputRefsArray[index - 1]?.removeAttribute('disabled');
-        inputRefsArray[index - 1]?.focus();
+
         return; // Early return to prevent cursor movement issues
       }
     }
